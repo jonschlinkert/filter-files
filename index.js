@@ -5,23 +5,19 @@ var path = require('path');
 var isDir = require('is-directory');
 
 module.exports = function files(dir, fn, recurse) {
-  if (!isDir(dir)) return dir;
-
   if (typeof fn !== 'function') {
     recurse = fn;
     fn = null;
   }
 
-  return filter(dir, fn)
-    .reduce(function (acc, fp) {
-      fp = path.join(dir, fp);
-
-      if (isDir(fp) && recurse !== false) {
-        acc = acc.concat(files(fp, fn));
-      } else {
-        acc = acc.concat(fp);
-      }
-      return acc;
+  return filter(dir, fn).reduce(function (acc, fp) {
+    fp = path.join(dir, fp);
+    if (isDir(fp) && recurse !== false) {
+      acc.push.apply(acc, files(fp, fn));
+    } else {
+      acc = acc.concat(fp);
+    }
+    return acc;
   }, []);
 };
 

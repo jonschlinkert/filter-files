@@ -24,8 +24,6 @@ var all = require('./expected/all');
 var js = require('./expected/js');
 var md = require('./expected/md');
 
-// console.log(files('node_modules', exclude(/node_modules/)))
-
 // tests
 describe('filter', function () {
   describe('recurse: true', function () {
@@ -37,6 +35,7 @@ describe('filter', function () {
       it('should return only js files:', function () {
         normalize(files('test/fixtures', ext('.js', true))).should.eql(js);
       });
+
       it('should return only md files:', function () {
         normalize(files('test/fixtures', ext('.md', true))).should.eql(md);
       });
