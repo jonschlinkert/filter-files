@@ -1,6 +1,6 @@
 {
   "name": "filter-files",
-  "description": "Recursively read directories and return a list of files filtered to have only the files for which the given function returns `true`.",
+  "description": "Recursively read directories and return a list of files filtered to have only the files for which the callback returns `true`.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/filter-files",
   "author": {
@@ -28,8 +28,7 @@
     "test": "mocha -R spec"
   },
   "devDependencies": {
-    "verb-tag-jscomments": ">= 0.2.0",
-    "verb": ">= 0.2.6",
+    "verb": "^0.2.6",
     "mocha": "*"
   },
   "keywords": [

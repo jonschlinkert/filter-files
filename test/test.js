@@ -24,16 +24,11 @@ var all = require('./expected/all');
 var js = require('./expected/js');
 var md = require('./expected/md');
 
-console.log(files('node_modules', exclude(/node_modules/)))
+// console.log(files('node_modules', exclude(/node_modules/)))
 
 // tests
 describe('filter', function () {
   describe('recurse: true', function () {
-    it('should return all files:', function () {
-      // normalize(files('./')).should.eql(all);
-    });
-
-
     describe('no filter function:', function () {
       it('should return all files:', function () {
         normalize(files('test/fixtures')).should.eql(all);
