@@ -33,11 +33,11 @@ describe('filter', function () {
       });
 
       it('should return only js files:', function () {
-        normalize(files('test/fixtures', ext('.js', true))).should.eql(js);
+        normalize(files('test/fixtures', ext('.js'))).should.eql(js);
       });
 
       it('should return only md files:', function () {
-        normalize(files('test/fixtures', ext('.md', true))).should.eql(md);
+        normalize(files('test/fixtures', ext('.md'))).should.eql(md);
       });
     });
   });
@@ -55,7 +55,7 @@ describe('filter', function () {
     });
 
     it('should use a filter function to return only javascript files', function () {
-      normalize(files('test/fixtures', ext('.js'), false)).should.eql([
+      normalize(files('test/fixtures', ext('.js', false), false)).should.eql([
         'test/fixtures/a.js',
         'test/fixtures/b.js',
         'test/fixtures/c.js'

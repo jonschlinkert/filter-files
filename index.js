@@ -4,21 +4,26 @@ var fs = require('fs');
 var path = require('path');
 var isDir = require('is-directory');
 
-module.exports = function files(dir, fn, recurse) {
+module.exports = function lookup(dir, fn, recurse) {
   if (typeof fn !== 'function') {
     recurse = fn;
     fn = null;
   }
 
-  return filter(dir, fn).reduce(function (acc, fp) {
-    fp = path.join(dir, fp);
+  var files = filter(dir, fn);
+  var len = files.length;
+  var arr = [];
+  var i = 0;
+
+  while (len--) {
+    var fp = path.join(dir, files[i++]);
     if (isDir(fp) && recurse !== false) {
-      acc.push.apply(acc, files(fp, fn));
+      arr.push.apply(arr, lookup(fp, fn));
     } else {
-      acc = acc.concat(fp);
+      arr = arr.concat(fp);
     }
-    return acc;
-  }, []);
+  }
+  return arr;
 };
 
 function filter(dir, fn) {
