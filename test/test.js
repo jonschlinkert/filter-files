@@ -26,40 +26,95 @@ var md = require('./expected/md');
 
 // tests
 describe('filter', function () {
-  describe('recurse: true', function () {
-    describe('no filter function:', function () {
-      it('should return all files:', function () {
-        normalize(files.sync('test/fixtures')).should.eql(all);
+  describe('async', function () {
+    describe('recurse', function () {
+      describe('no filter function:', function () {
+        it('should return all files:', function (done) {
+          files('test/fixtures', function (err, files) {
+            normalize(files).should.eql(all);
+            done()
+          });
+        });
+
+        it('should return only js files:', function (done) {
+          files('test/fixtures', ext('.js'), function (err, files) {
+            normalize(files).should.eql(js);
+            done();
+          });
+        });
+
+        it('should return only md files:', function (done) {
+          files('test/fixtures', ext('.md'), function (err, files) {
+            normalize(files).should.eql(md);
+            done();
+          });
+        });
+      });
+    });
+
+    describe('no recurse', function (done) {
+      it('should use a filter function to return only files', function (done) {
+        files('test/fixtures', isFile, false, function (err, files) {
+          normalize(files).should.eql([
+            'test/fixtures/a.js',
+            'test/fixtures/a.md',
+            'test/fixtures/b.js',
+            'test/fixtures/b.md',
+            'test/fixtures/c.js',
+            'test/fixtures/c.md',
+          ]);
+          done();
+        });
       });
 
-      it('should return only js files:', function () {
-        normalize(files.sync('test/fixtures', ext('.js'))).should.eql(js);
-      });
-
-      it('should return only md files:', function () {
-        normalize(files.sync('test/fixtures', ext('.md'))).should.eql(md);
+      it('should use a filter function to return only javascript files', function (done) {
+        files('test/fixtures', ext('.js', false), false, function (err, files) {
+          normalize(files).should.eql([
+            'test/fixtures/a.js',
+            'test/fixtures/b.js',
+            'test/fixtures/c.js'
+          ]);
+          done();
+        });
       });
     });
   });
+  describe('sync', function () {
+    describe('recurse', function () {
+      describe('no filter function:', function () {
+        it('should return all files:', function () {
+          normalize(files.sync('test/fixtures')).should.eql(all);
+        });
 
-  describe('recurse: false', function () {
-    it('should use a filter function to return only files', function () {
-      normalize(files.sync('test/fixtures', isFile, false)).should.eql([
-        'test/fixtures/a.js',
-        'test/fixtures/a.md',
-        'test/fixtures/b.js',
-        'test/fixtures/b.md',
-        'test/fixtures/c.js',
-        'test/fixtures/c.md',
-      ]);
+        it('should return only js files:', function () {
+          normalize(files.sync('test/fixtures', ext('.js'))).should.eql(js);
+        });
+
+        it('should return only md files:', function () {
+          normalize(files.sync('test/fixtures', ext('.md'))).should.eql(md);
+        });
+      });
     });
 
-    it('should use a filter function to return only javascript files', function () {
-      normalize(files.sync('test/fixtures', ext('.js', false), false)).should.eql([
-        'test/fixtures/a.js',
-        'test/fixtures/b.js',
-        'test/fixtures/c.js'
-      ]);
+    describe('no recurse', function () {
+      it('should use a filter function to return only files', function () {
+        normalize(files.sync('test/fixtures', isFile, false)).should.eql([
+          'test/fixtures/a.js',
+          'test/fixtures/a.md',
+          'test/fixtures/b.js',
+          'test/fixtures/b.md',
+          'test/fixtures/c.js',
+          'test/fixtures/c.md',
+        ]);
+      });
+
+      it('should use a filter function to return only javascript files', function () {
+        normalize(files.sync('test/fixtures', ext('.js', false), false)).should.eql([
+          'test/fixtures/a.js',
+          'test/fixtures/b.js',
+          'test/fixtures/c.js'
+        ]);
+      });
     });
   });
 });
