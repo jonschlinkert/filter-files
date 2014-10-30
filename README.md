@@ -43,11 +43,25 @@ console.log(files);
 Pass a filter function:
 
 ```js
-var files = filter.sync('lib', function(fp) {
+filter.sync('lib', function(fp) {
   return /a/.test(fp);
 });
-console.log(files);
 //=> [ 'lib/async.js' ]
+```
+
+Or an array of filter functions:
+
+```js
+function include(fp) {
+  return /^\./.test(fp);
+}
+function exclude(fp) {
+  return !/^\.[jntv]/.test(fp);
+}
+
+// `false` means "don't recurse"
+filter('.', [include, exclude], false);
+//=> ['.git', '.gitignore', '.gitattribuets']
 ```
 
 ### async
