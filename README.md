@@ -83,13 +83,14 @@ filter('lib', fn, function(err, files) {
 
 ### Filtering
 
-Filter functions take three parameters and return `true` or `false`.
+Filter functions take four parameters and return `true` or `false`.
 
 **Params**
 
  - `fp` filepath being looped over
  - `dir` current directory
  - `files` accumulated array of files
+ - `recurse` whether recurse is `true` or `false`
 
 **Example**
 
@@ -101,8 +102,8 @@ var isDir = require('is-directory');
 
 function ext(extname) {
   // this is our filter function
-  return function filter(fp, dir, files) {
-    if (isDir(path.join(dir, fp))) {
+  return function filter(fp, dir, files, recurse) {
+    if (isDir(path.join(dir, fp)) && recurse === true) {
       return true;
     }
     return path.extname(fp) === extname;
