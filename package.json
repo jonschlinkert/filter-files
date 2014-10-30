@@ -1,7 +1,7 @@
 {
   "name": "filter-files",
   "description": "Recursively read directories and return a list of files, filtered to have only the files for which the (optional) filter function returns `true`. Sync and async.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/jonschlinkert/filter-files",
   "author": {
     "name": "Jon Schlinkert",
