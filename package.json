@@ -1,7 +1,7 @@
 {
   "name": "filter-files",
   "description": "Recursively read directories and return a list of files filtered to have only the files for which the callback returns `true`.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/filter-files",
   "author": {
     "name": "Jon Schlinkert",
@@ -32,12 +32,25 @@
     "mocha": "*"
   },
   "keywords": [
-    "fs",
-    "read",
     "dir",
-    "directories"
+    "directories",
+    "ext",
+    "extension",
+    "file",
+    "file-path",
+    "file-system",
+    "filepath",
+    "files",
+    "filter",
+    "fs",
+    "javascript",
+    "js",
+    "path",
+    "util",
+    "utils"
   ],
   "dependencies": {
+    "async": "^0.9.0",
     "is-directory": "^0.2.2"
   }
 }
