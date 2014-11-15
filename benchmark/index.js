@@ -3,9 +3,12 @@
 var Suite = require('benchmarked');
 var suite = new Suite({
   result: false,
-  fixtures: 'fixtures/sync-{med,shallow}.js',
-  add: 'code/sync-*-filter.js',
+  add: 'code/sync-current.js',
+  fixtures: 'fixtures/*.js',
   cwd: __dirname
 });
 
-suite.run();
+suite.run(function (arg) {
+  // shallow, don't recurse
+  return arg.concat(false);
+});

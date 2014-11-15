@@ -5,13 +5,12 @@ var path = require('path');
 var isDir = require('is-directory');
 var filter = require('../../lib/filter');
 
-module.exports = function lookup(dir, fn, recurse) {
-  if (typeof fn !== 'function') {
-    recurse = fn;
-    fn = null;
+module.exports = function lookup(dir, recurse, fn) {
+  if (typeof recurse !== 'boolean') {
+    fn = recurse;
   }
 
-  var files = filter(fs.readdirSync(dir), dir, fn);
+  var files = filter(fs.readdirSync(dir), dir, fn, recurse);
 
   return files.reduce(function (acc, fp) {
     fp = path.join(dir, fp);

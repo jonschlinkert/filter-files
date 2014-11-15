@@ -16,12 +16,13 @@ var chalk = require('chalk');
  * sync
  */
 
-glob.sync(__dirname + '/code/sync-reduce.js').forEach(function (fp) {
+glob.sync(__dirname + '/code/sync-*.js').forEach(function (fp) {
   var fn = require(path.resolve(__dirname, 'code', fp));
   var name = path.basename(fp, path.extname(fp));
-  var fixtures = glob.sync(__dirname + '/fixtures/async-{med,shallow}.js');
-  fixtures.forEach(function (fixture) {
-    console.log(chalk.bold(name) + ':', inspect(fn.apply(fn, require(fixture))));
+
+  glob.sync(__dirname + '/fixtures/sync-*.js').forEach(function (fixture) {
+    var args = require(fixture).concat(false);
+    console.log(chalk.bold(name) + ':', inspect(fn.apply(fn, args)));
   });
 });
 
@@ -29,21 +30,22 @@ glob.sync(__dirname + '/code/sync-reduce.js').forEach(function (fp) {
  * async
  */
 
-glob(__dirname + '/fixtures/async-{med,shallow}.js', function (err, fixtures) {
-  fixtures.forEach(function(fixture) {
-    glob(__dirname + '/code/async*.js', function (err, files) {
-      files.forEach(function(fp) {
-        var fn = require(path.resolve(__dirname, 'code', fp));
-        var name = path.basename(fp, path.extname(fp));
-        fn.apply(fn, require(fixture), function(err, files) {
-          console.log(chalk.bold(name) + ':', inspect(files));
-        });
-      });
-    });
-  });
-});
+// glob(__dirname + '/fixtures/async-{med,shallow}.js', function (err, fixtures) {
+//   fixtures.forEach(function(fixture) {
+//     glob(__dirname + '/code/async*.js', function (err, files) {
+//       files.forEach(function(fp) {
+//         var fn = require(path.resolve(__dirname, 'code', fp));
+//         var name = path.basename(fp, path.extname(fp));
+//         fn.apply(fn, require(fixture), function(err, files) {
+//           console.log(chalk.bold(name) + ':', inspect(files));
+//         });
+//       });
+//     });
+//   });
+// });
 
 function inspect(o) {
   var str = util.inspect(o, {depth: null});
-  return str.replace(/[\s\n]+/g, ' ');
+  return str;
+  // return str.replace(/[\s\n]+/g, ' ');
 }
