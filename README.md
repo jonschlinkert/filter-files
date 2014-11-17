@@ -60,7 +60,7 @@ function exclude(fp) {
 }
 
 // pass `false` to prevent recursion
-filter('.', false, [include, exclude]);
+filter('.', [include, exclude], false);
 //=> ['.git', '.gitignore', '.gitattribuets']
 ```
 
