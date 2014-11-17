@@ -54,7 +54,7 @@ describe('filter', function () {
 
     describe('no recurse', function (done) {
       it('should use a filter function to return only files', function (done) {
-        files('test/fixtures', false, isFile, function (err, files) {
+        files('test/fixtures', isFile, false, function (err, files) {
           normalize(files).should.eql([
             'test/fixtures/a.js',
             'test/fixtures/a.md',
@@ -68,7 +68,7 @@ describe('filter', function () {
       });
 
       it('should use a filter function to return only javascript files', function (done) {
-        files('test/fixtures', false, ext('.js', false), function (err, files) {
+        files('test/fixtures', ext('.js', false), false, function (err, files) {
           normalize(files).should.eql([
             'test/fixtures/a.js',
             'test/fixtures/b.js',
@@ -98,7 +98,7 @@ describe('filter', function () {
 
     describe('no recurse', function () {
       it('should use a filter function to return only files', function () {
-        normalize(files.sync('test/fixtures', false, isFile)).should.eql([
+        normalize(files.sync('test/fixtures', isFile, false)).should.eql([
           'test/fixtures/a.js',
           'test/fixtures/a.md',
           'test/fixtures/b.js',
@@ -109,7 +109,7 @@ describe('filter', function () {
       });
 
       it('should use a filter function to return only javascript files', function () {
-        normalize(files.sync('test/fixtures', false, ext('.js', false))).should.eql([
+        normalize(files.sync('test/fixtures', ext('.js', false), false)).should.eql([
           'test/fixtures/a.js',
           'test/fixtures/b.js',
           'test/fixtures/c.js'
